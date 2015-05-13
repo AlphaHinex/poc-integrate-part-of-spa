@@ -62,13 +62,38 @@
     var urlPrefix = 'http://localhost:810/';
 
     function renderSnippet(url) {
-      $.get(urlPrefix + url, function(data) {
-        $('#angularBlock').html('');
-        $('#angularBlock').html('<div id="innerBlock">' + data + '</div>');
-        angular.bootstrap($('#innerBlock'), [ngAppName]);
-      });
+      $('#angularBlock').empty();
+      $('#angularBlock').append('<div id="innerBlock"></div>');
+      $.get(urlPrefix + url)
+        .done(function(data) {
+          $('#innerBlock').append(data);
+        })
+        .done(function() {
+          $.when(loadNgInclude())
+          .done(function() {
+            console.log($('#angularBlock').prop('outerHTML'));
+            angular.bootstrap($('#innerBlock'), [ngAppName]);
+          });
+        });
     }
 
+    function loadNgInclude() {
+      var dtd = $.Deferred();
+      var requests = Array();
+      var includes = $('#innerBlock').find('[ng-include]');
+      includes.each(function(index, el) {
+        var url = $(el).attr('ng-include').replace(/[\'\"]/g, '');
+        requests.push($.get(urlPrefix + url)
+                        .done(function(data) {
+                          $(el).append(data);
+                          $(el).removeAttr('ng-include');
+                        }));
+      });
+      $.when.apply($, requests).done(function() {
+        dtd.resolve();
+      });
+      return dtd.promise();
+    }
   </script>
 </body>
 </html>
