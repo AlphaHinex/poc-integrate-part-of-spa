@@ -1,0 +1,1 @@
+<div ng-controller="MainPubinfoSubjectsCtrl"> <div class="row"> <div class="thumbnail"> <img ng-src="{{subject.src}}"> </div> </div> <div class="row"> <carousel interval="myInterval"> <slide ng-repeat="slide in slides" active="slide.active"> <img ng-src="{{slide.src}}" style="margin:auto"> </slide> </carousel> </div> </div>
