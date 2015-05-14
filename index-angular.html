@@ -71,7 +71,6 @@
         .done(function() {
           $.when(loadNgInclude())
           .done(function() {
-            console.log($('#angularBlock').prop('outerHTML'));
             angular.bootstrap($('#innerBlock'), [ngAppName]);
           });
         });
@@ -82,11 +81,13 @@
       var requests = Array();
       var includes = $('#innerBlock').find('[ng-include]');
       includes.each(function(index, el) {
-        var url = $(el).attr('ng-include').replace(/[\'\"]/g, '');
+        var url = $(el).attr('src') || $(el).attr('ng-include')
+        url = url.replace(/[\'\"]/g, '');
         requests.push($.get(urlPrefix + url)
                         .done(function(data) {
                           $(el).append(data);
                           $(el).removeAttr('ng-include');
+                          $(el).removeAttr('src');
                         }));
       });
       $.when.apply($, requests).done(function() {
