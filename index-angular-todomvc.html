@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="http://localhost:811/node_modules/todomvc-common/base.css">
+  <link rel="stylesheet" href="http://localhost:811/node_modules/todomvc-app-css/index.css">
+</head>
+<body>
+
+  <div>
+    <button onclick="renderSnippet('templates/todomvc-index.html');">'/'</button>
+    <button onclick="renderSnippet('templates/todomvc-index.html');">'/active'</button>
+    <button onclick="renderSnippet('templates/todomvc-index.html')">'/completed'</button>
+  </div>
+
+  <div id="angularBlock"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="http://localhost:811/node_modules/todomvc-common/base.js"></script>
+  <script src="http://localhost:811/node_modules/angular/angular.js"></script>
+  <script src="http://localhost:811/node_modules/angular-route/angular-route.js"></script>
+  <script src="http://localhost:811/js/app.js"></script>
+  <script src="http://localhost:811/js/controllers/todoCtrl.js"></script>
+  <script src="http://localhost:811/js/services/todoStorage.js"></script>
+  <script src="http://localhost:811/js/directives/todoFocus.js"></script>
+  <script src="http://localhost:811/js/directives/todoEscape.js"></script>
+  <script>
+    var ngAppName = 'todomvc';
+    var urlPrefix = 'http://localhost:811/';
+
+    function renderSnippet(url) {
+      $('#angularBlock').empty();
+      $('#angularBlock').append('<div id="innerBlock"><ng-view></div>');
+      // $.get(urlPrefix + url)
+      //   .done(function(data) {
+      //     $('#innerBlock').append(data);
+      //   })
+      //   .done(function() {
+      //     $.when(loadNgInclude())
+      //     .done(function() {
+            angular.bootstrap($('#innerBlock'), [ngAppName]);
+      //     });
+      //   });
+    }
+
+    function loadNgInclude() {
+      var dtd = $.Deferred();
+      var requests = Array();
+      var includes = $('#innerBlock').find('[ng-include]');
+      includes.each(function(index, el) {
+        var url = $(el).attr('src') || $(el).attr('ng-include')
+        url = url.replace(/[\'\"]/g, '');
+        requests.push($.get(urlPrefix + url)
+                        .done(function(data) {
+                          $(el).append(data);
+                          $(el).removeAttr('ng-include');
+                          $(el).removeAttr('src');
+                        }));
+      });
+      $.when.apply($, requests).done(function() {
+        dtd.resolve();
+      });
+      return dtd.promise();
+    }
+  </script>
+</body>
+</html>
