@@ -11,7 +11,7 @@ angular.module('todomvc', ['ngRoute'])
 
 		var routeConfig = {
 			controller: 'TodoCtrl',
-			templateUrl: 'templates/todomvc-index.html',
+			templateUrl: 'http://localhost:811/templates/todomvc-index.html',
 			resolve: {
 				store: function (todoStorage) {
 					// Get the correct module (API or localStorage).
@@ -29,4 +29,9 @@ angular.module('todomvc', ['ngRoute'])
 			.otherwise({
 				redirectTo: '/'
 			});
+	});
+
+angular.module('todomvc')
+	.config(function($sceDelegateProvider){
+		$sceDelegateProvider.resourceUrlWhitelist(['**']);
 	});

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+
+  <link rel="stylesheet" href="http://localhost:810/styles/vendor.7f14bbd6.css" />
+  <link rel="stylesheet" href="http://localhost:810/styles/main.e9064302.css" />
+
+  <link rel="stylesheet" href="http://localhost:811/node_modules/todomvc-common/base.css">
+  <link rel="stylesheet" href="http://localhost:811/node_modules/todomvc-app-css/index.css">
+</head>
+<body>
+
+  <div>
+    <button onclick="renderSnippet('aresApp', 'http://localhost:810/', 'views/form-demo/input-demo.html');">Input Demo</button>
+    <button onclick="renderSnippet('aresApp', 'http://localhost:810/', 'views/form-demo/tabs-demo.html');">Tabs Demo</button>
+    <button onclick="renderSnippet('aresApp', 'http://localhost:810/', 'views/main.html')">Home</button>
+    <button onclick="renderSnippet('todomvc')">Todo MVC</button>
+  </div>
+
+  <div id="angularBlock"></div>
+
+  <script src="integrate-angularjs.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <script src="http://localhost:810/scripts/vendor.721aff1d.js"></script>
+  <script src="http://localhost:810/scripts/scripts.7cc8468d.js"></script>
+
+  <script src="http://localhost:811/node_modules/todomvc-common/base.js"></script>
+  <script src="http://localhost:811/node_modules/angular/angular.js"></script>
+  <script src="http://localhost:811/node_modules/angular-route/angular-route.js"></script>
+  <script src="http://localhost:811/js/app-for-integrate.js"></script>
+  <script src="http://localhost:811/js/controllers/todoCtrl.js"></script>
+  <script src="http://localhost:811/js/services/todoStorage.js"></script>
+  <script src="http://localhost:811/js/directives/todoFocus.js"></script>
+  <script src="http://localhost:811/js/directives/todoEscape.js"></script>
+</body>
+</html>
