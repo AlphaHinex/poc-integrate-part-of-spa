@@ -1,8 +1,8 @@
-function renderSnippet(ngAppName, urlPrefix, url) {
+function renderSnippet(ngAppName, urlPrefix, templateUrl) {
   $('#angularBlock').empty();
   $('#angularBlock').append('<div id="innerBlock"><ng-view /></div>');
-  if(urlPrefix && url) {
-    $.get(urlPrefix + url)
+  if(urlPrefix && templateUrl) {
+    $.get(urlPrefix + templateUrl)
       .done(function(data) {
         $('#innerBlock').append(data);
       })
